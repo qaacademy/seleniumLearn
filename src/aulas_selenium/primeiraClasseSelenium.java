@@ -31,14 +31,18 @@ public class primeiraClasseSelenium {
 	@Rule
 	public TestName testName = new TestName(); // Devolve o nome do meu @Teste
 
+
 	WebDriver driver;
 
 	@Before
-	public void iniciaDriver() {
-		driver = new ChromeDriver();
-		driver.manage().window().setSize(new Dimension(1200, 765));
-		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS); // Espera 5 segundos
-//		driver.get("http://demo.automationtesting.in/Register.html");
+	public void iniciaDriver() throws IOException {
+		
+		inicializarChromeDriver();
+		
+//		driver = new ChromeDriver();
+//		driver.manage().window().setSize(new Dimension(1200, 765));
+//		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS); // Espera 5 segundos
+////		driver.get("http://demo.automationtesting.in/Register.html");
 	}
 
 	public void testeSelenium() throws InterruptedException {
@@ -144,14 +148,24 @@ wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//title[contain
 	
 	@Test
 	public void uploadArquivo() throws Exception {
+		long inicio = System.currentTimeMillis();
 		driver.get("http://demo.automationtesting.in/Register.html");
-		driver.findElement(By.xpath("//input[@id='imagesrc']")).sendKeys("/Users/mac/Documents/QA Logo fundo branco aplicado.png");
+		driver.findElement(By.xpath("//input[@id='imagesrc']")).sendKeys("/Users/mac/Documents/Flavio.jpg");
 		screenShot("Upload Arquivo");
-		Thread.sleep(4000);
-
+//		Thread.sleep(10000);
+		System.out.println(testName.getMethodName());
+		long fim = System.currentTimeMillis();
+		
+		System.out.println(calculaTempoExecucao(inicio, fim) + "Segundos");
 
 	}
 	
+	public Long calculaTempoExecucao(long inicio,long fim) {
+		return (fim - inicio)/1000;
+		
+		
+	}
+
 	public void testeSetupChrome() throws IOException, InterruptedException {
 		inicializarChromeDriver();
 		driver.get("http://demo.automationtesting.in/Windows.html");
@@ -177,12 +191,12 @@ wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//title[contain
 	 * @throws IOException
 	 */
 	private void inicializarChromeDriver() throws IOException {
-		if (System.getProperty("os.name").toLowerCase().contains("windows")) {
-			System.setProperty("webdriver.chrome.driver", 
-					"chromedriver.exe");
-		} else {
-			System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir")+File.pathSeparator+"chromedriver");
-		}
+//		if (System.getProperty("os.name").toLowerCase().contains("windows")) {
+//			System.setProperty("webdriver.chrome.driver", 
+//					"chromedriver.exe");
+//		} else {
+//			System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir")+File.pathSeparator+"chromedriver");
+//		}
 		ChromeOptions chromeOptions = new ChromeOptions();
 		chromeOptions.addArguments(
 				   "--headless",
