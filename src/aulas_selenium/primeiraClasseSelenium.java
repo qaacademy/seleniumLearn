@@ -121,6 +121,7 @@ public class primeiraClasseSelenium {
 		WebElement element = driver.findElement(By.xpath("//*[@type='text']"));
 		element.click();
 		element.sendKeys("Teste Iframess");
+		driver.switchTo().defaultContent();//Retorna para o contexto da pagina
 		Thread.sleep(2000);
 
 	}
